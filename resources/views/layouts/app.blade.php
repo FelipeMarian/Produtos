@@ -34,6 +34,9 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark bg-white" href="{{ url('produtos') }}">Listagem de Produtos</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark bg-white" href="{{ url('vendedores') }}">Vendedores</a>
+                            </li>
                     @endif
                     </ul>
 

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProdutoController;
+use App\Http\Controllers\VendedoresController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +19,9 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index']);
 
 Route::get('produtos/buscar',[ProdutoController::class,'buscar']);
 Route::resource('produtos',ProdutoController::class);
+
+Route::get('vendedores/buscar',[VendedoresController::class,'buscar']);
+Route::resource('vendedores',VendedoresController::class);
 
 Auth::routes();
 

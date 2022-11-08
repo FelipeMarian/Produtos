@@ -39,7 +39,8 @@ class ProdutoController extends Controller
     {
         if ((Auth::check()) && (Auth::user()->isAdmin())) {
             $produtos = Produto::all();
-            return view('produtos.create',['produtos'=>$produtos]);
+            $vendedores = Vendedores::all();
+            return view('produtos.create',['vendedores'=>$vendedores,'produtos'=>$produtos]);
         }
         else {
             return redirect('login');
@@ -70,7 +71,7 @@ class ProdutoController extends Controller
             $produto->valor = $request->input('valor');
             $produto->dataValidade = \Carbon\Carbon::now()->addDays(15);
             $produto->dataHoje = \Carbon\Carbon::now();
-            if($noticia->save()) {
+            if($produto->save()) {
                 if($request->hasFile('foto')){
                     $imagem = $request->file('foto');
                     $nomearquivo = md5($produto->id).".".$imagem->getClientOriginalExtension();
@@ -108,7 +109,7 @@ class ProdutoController extends Controller
         if ((Auth::check()) && (Auth::user()->isAdmin())) {
             $produto = Produto::find($id);
             $vendedores = Vendedores::all();
-            return view('produto.edit',array('produto' => $produto,'vendedores'=>$vendedores));
+            return view('produtos.edit',array('produto' => $produto,'vendedores'=>$vendedores));
         } else {
             return redirect('login');
         }
@@ -132,7 +133,7 @@ class ProdutoController extends Controller
                 'dataValidade'=>'required',
                 'dataHoje'=>'required',
             ]);
-            $produto = new Produto();
+            $produto = Produto::find($id);
             if($request->hasFile('foto')){
                 $imagem = $request->file('foto');
                 $nomearquivo = md5($produto->id).".".$imagem->getClientOriginalExtension();
@@ -144,7 +145,7 @@ class ProdutoController extends Controller
             $produto->valor = $request->input('valor');
             $produto->dataValidade = \Carbon\Carbon::now()->addDays(15);
             $produto->dataHoje = \Carbon\Carbon::now();
-            if($noticia->save()) {
+            if($produto->save()) {
                 Session::flash('mensagem','Produto alterado com sucesso');
                 return redirect()->back();
             }
